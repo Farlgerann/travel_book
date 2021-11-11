@@ -20,7 +20,7 @@ export class DetailsComponent implements OnInit{
   
   @ViewChild(MatTable) table: MatTable<Travels>;
 
-  displayedColumns: string[] = ['name', 'description', 'dates', 'like', 'action'];
+  displayedColumns: string[] = ['name', 'description', 'departure', 'like', 'action'];
   dataSource = new MatTableDataSource<Travels>();
 
   addTravel(): void {
@@ -29,7 +29,8 @@ export class DetailsComponent implements OnInit{
         position: '',
         name: '',
         description: '',
-        dates: '',
+        departure: '',
+        return: '',
         like: false
       },
     }).afterClosed().subscribe(result => {
@@ -39,7 +40,7 @@ export class DetailsComponent implements OnInit{
       }
     });
 
-    this.dataSource.data.push({position:this.dataSource.data.length+1, name: "voyageTest", description: 'voyage de test', dates: 2021, like: false}),
+    this.dataSource.data.push({position:this.dataSource.data.length+1, name: "voyageTest", description: 'voyage de test', departure: "2021/0/01", return: "2021/0/08", like: false}),
     this.table.renderRows();
   }
 
@@ -49,7 +50,8 @@ export class DetailsComponent implements OnInit{
         position: this.dataSource.data[id].position,
         name: this.dataSource.data[id].name,
         description: this.dataSource.data[id].description,
-        dates: this.dataSource.data[id].dates,
+        departure: this.dataSource.data[id].departure,
+        return: this.dataSource.data[id].return,
         like: this.dataSource.data[id].like
       },
     });

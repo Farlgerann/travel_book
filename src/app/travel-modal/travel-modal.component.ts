@@ -17,7 +17,8 @@ export class TravelModalComponent {
     position: new FormControl(),
     name: new FormControl(),
     description: new FormControl(),
-    dates: new FormControl(),
+    departure: new FormControl(),
+    return: new FormControl(),
     like: new FormControl()
   })
 
