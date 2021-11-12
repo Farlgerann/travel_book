@@ -40,7 +40,7 @@ export class DetailsComponent implements OnInit{
       }
     });
 
-    this.dataSource.data.push({position:this.dataSource.data.length+1, name: "voyageTest", description: 'voyage de test', departure: "2021/0/01", return: "2021/0/08", like: false}),
+    this.dataSource.data.push({position:this.dataSource.data.length+1, name: "travel", description: 'travel desc', departure: "2021/0/01", return: "2021/0/08", like: false}),
     this.table.renderRows();
   }
 

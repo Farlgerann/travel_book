@@ -2,7 +2,6 @@
 <div mat-dialog-content>
 
 <form [formGroup]="travelForm" (ngSubmit)="onFormSubmit()">
-  Position: <input type="text" formControlName="position" name="usernamevalue"  [(ngModel)]="data.position" placeholder="Enter Position"><br><br>
   Name: <input type="text" formControlName="name" [(ngModel)]="data.name" placeholder="Enter Name"><br><br>
   Description: <input type="text" formControlName="description" [(ngModel)]="data.description" placeholder="Enter Description"> <br><br>
   Departure: <input type="text" formControlName="departure" [(ngModel)]="data.departure" placeholder="Enter departure"> <br><br>
