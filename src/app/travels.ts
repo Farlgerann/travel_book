@@ -1,8 +1,8 @@
 export interface Travels {
-  position: number;
+  id: number;
   name: string;
   description: string;
-  departure: string;
-  return: string;
+  departure: Date;
+  return: Date;
   like: boolean;
 }

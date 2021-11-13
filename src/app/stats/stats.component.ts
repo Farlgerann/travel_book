@@ -1,10 +1,11 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { TravelService } from '../travel.service';
+import {TravelService} from '../travel.service';
 
-import { MatTableDataSource } from '@angular/material/table';
-import { MatTable } from '@angular/material/table';
-import { Travels } from '../travels';
+import {MatTableDataSource} from '@angular/material/table';
+import {Travels} from '../travels';
+import {tap} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-stats',
@@ -12,30 +13,32 @@ import { Travels } from '../travels';
   styleUrls: ['./stats.component.scss']
 })
 export class StatsComponent implements OnInit {
+  private travels$: Observable<Travels[]>;
 
-  constructor(private travelService: TravelService) { 
+  constructor(private travelService: TravelService) {
 
   }
 
   travelArray = new MatTableDataSource();
   dataSource = new MatTableDataSource();
-  
-  dummy : Calculation[];
+
+  dummy: Calculation[];
   displayedColumns: string[] = ['year', 'travelCount', 'totalDays', 'averageDuration'];
-  
-  getTravels() : void{
-    this.travelService.getTravels()
-    .subscribe(travels => this.travelArray = new MatTableDataSource<Travels>(travels));
-  }
-  
+
   ngOnInit(): void {
-    this.getTravels();
-    let travelCount = this.travelArray.data.length;
-    this.dummy = [
-      {year : 2021, travelCount: travelCount, totalDays: 57, averageDuration: 6}
-    ];
-    this.dataSource = new MatTableDataSource<Calculation>(this.dummy);
-  };
+    this.travels$ = this.travelService.getTravels();
+
+    this.travels$ .pipe(
+      tap((travels) => {
+
+        this.travelArray = new MatTableDataSource<Travels>(travels);
+        const travelCount = this.travelArray.data.length;
+        this.dummy = [
+          {year: 2021, travelCount, totalDays: 57, averageDuration: 6}
+        ];
+        this.dataSource = new MatTableDataSource<Calculation>(this.dummy);
+      })).subscribe();
+  }
 
 }
 
