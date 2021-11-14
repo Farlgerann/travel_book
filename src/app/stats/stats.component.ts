@@ -20,9 +20,9 @@ export class StatsComponent implements OnInit {
   }
 
   travelArray = new MatTableDataSource();
-  dataSource = new MatTableDataSource();
+  statsToDisplay = new MatTableDataSource();
 
-  dummy: Calculation[];
+  mapArray = new Map<number, any>();
   displayedColumns: string[] = ['year', 'travelCount', 'totalDays', 'averageDuration'];
 
   ngOnInit(): void {
@@ -33,18 +33,33 @@ export class StatsComponent implements OnInit {
 
         this.travelArray = new MatTableDataSource<Travels>(travels);
         const travelCount = this.travelArray.data.length;
-        this.dummy = [
-          {year: 2021, travelCount, totalDays: 57, averageDuration: 6}
-        ];
-        this.dataSource = new MatTableDataSource<Calculation>(this.dummy);
+        this.travelArray.data.forEach((element: any) => {
+          if (!this.mapArray.has(element.departure.getFullYear())) {
+            this.mapArray.set(element.departure.getFullYear(), {
+              year: element.departure.getFullYear(),
+              travelCount: 1,
+              totalDays: element.return.getDate() - element.departure.getDate(),
+              averageDuration: this.getDifferenceInDays(element.departure, element.return)
+            });
+          }
+          else {
+            console.log(this.getDifferenceInDays(element.departure, element.return));
+            console.log("return date : " + (element.return.getDate()));
+            this.mapArray.set(element.departure.getFullYear(), {
+              year: element.departure.getFullYear(),
+              travelCount: this.mapArray.get(element.departure.getFullYear()).travelCount + 1,
+              totalDays: this.mapArray.get(element.departure.getFullYear()).totalDays + this.getDifferenceInDays(element.departure, element.return),
+              averageDuration: (this.mapArray.get(element.departure.getFullYear()).totalDays + this.getDifferenceInDays(element.departure, element.return)) / (this.mapArray.get(element.departure.getFullYear()).travelCount + 1)
+            });
+          }
+        });     
+        this.statsToDisplay = new MatTableDataSource<Map<number, any>>(Array.from(this.mapArray.values()));
       })).subscribe();
   }
+  
+  getDifferenceInDays(date1: Date, date2: Date) {
+    const diff = Math.abs(date2.getTime() - date1.getTime());
+    return Math.ceil(diff / (1000 * 3600 * 24));
+  }
 
-}
-
-export interface Calculation {
-  year: number;
-  travelCount: number;
-  totalDays: number;
-  averageDuration: number;
 }
