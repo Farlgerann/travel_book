@@ -53,15 +53,15 @@ export class DetailsComponent implements OnInit {
   editTravel(id: number): void {
     this.dialog.open(TravelModalComponent, {
       data: {
-        id: this.dataSource.data[id].id,
+        id: id,
         name: this.dataSource.data[id].name,
         description: this.dataSource.data[id].description,
         departure: this.dataSource.data[id].departure,
         return: this.dataSource.data[id].return,
         like: this.dataSource.data[id].like
       },
-    }).afterClosed().pipe(tap(traval => {
-      this.travelService.setTravel(traval);
+    }).afterClosed().pipe(tap(travel => {
+      this.travelService.setTravel(travel);
     })).subscribe();
   }
 

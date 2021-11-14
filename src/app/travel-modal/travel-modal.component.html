@@ -1,16 +1,35 @@
 <h1 mat-dialog-title>Travel form</h1>
 <div mat-dialog-content>
 
-  <form [formGroup]="travelForm">
-    Name: <input type="text" formControlName="name" placeholder="Enter Name"><br><br>
-    Description: <input type="text" formControlName="description"
-                        placeholder="Enter Description"> <br><br>
-    Departure: <input type="text" formControlName="departure"
-                      placeholder="Enter departure"> <br><br>
-    Return: <input type="text" formControlName="return" placeholder="Enter return"> <br><br>
-    Like: <input formControlName="like" placeholder="Like ?"> <br><br>
+  <form class="form" [formGroup]="travelForm">
+    
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Name: </mat-label>
+      <input matInput type="text" formControlName="name" placeholder="Enter Name"><br><br>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Description: </mat-label>
+      <input matInput type="text" formControlName="description" placeholder="Enter Description"> <br><br>
+    </mat-form-field>
+    
+    <mat-form-field class="form-field" appearance="fill">      
+      <mat-label>Departure: </mat-label>
+      <input matInput type="text" formControlName="departure" placeholder="Enter departure"> <br><br>
+    </mat-form-field>
+    
+    <mat-form-field class="form-field" appearance="fill">      
+      <mat-label>Return: </mat-label>
+      <input matInput type="text" formControlName="return" placeholder="Enter return"> <br><br>
+    </mat-form-field>
+    
+    <mat-label>Like: </mat-label>
+    <button (click)="toggleLike()" mat-icon-button color="primary" ><mat-icon>{{this.travelForm.get('like').value?'favorite':'favorite_border'}}</mat-icon></button>
+
   </form>
+  <mat-progress-bar color="blue" mode="determinate" [value]="progressBarValue"></mat-progress-bar>
+
 </div>
 <div mat-dialog-actions>
-  <button mat-flat-button [matDialogClose]="travelForm.getRawValue()">Submit</button>
+  <button mat-raised-button [matDialogClose]="travelForm.getRawValue()">Submit</button>
 </div>
