@@ -21,10 +21,11 @@ export class TravelService {
     return this.dataSource$.pipe(startWith(this.dataSource));
   }
 
-  //bon la tu pourra refaire le truc a ta sauce mais le but est simplement de recupere les donner de base et de faire next / re-emetre le suject pour {insert commentaire plus haut}
   setTravel(travel: Partial<Travels>): void {
-    this.dataSource[travel.id] = {...this.dataSource[travel.id], ...travel};
-    this.dataSource$.next(this.dataSource);
+    if (travel) {
+      this.dataSource[travel.id] = {...this.dataSource[travel.id], ...travel};
+      this.dataSource$.next(this.dataSource);
+    }
   }
   
   insertTravel(travel: Travels): void {

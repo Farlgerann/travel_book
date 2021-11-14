@@ -45,8 +45,6 @@ export class DetailsComponent implements OnInit {
         this.travelService.insertTravel(result);
       }
     });
-
-
       this.table.renderRows();
   }
 
