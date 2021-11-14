@@ -31,6 +31,8 @@ export class TravelModalComponent implements OnInit {
     this.travelForm.valueChanges.subscribe(() => {
       this.updateProgressBar();
     });
+    this.updateProgressBar();
+
   }
 
   updateProgressBar() {

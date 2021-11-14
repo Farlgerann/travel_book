@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {TravelModalComponent} from '../travel-modal/travel-modal.component';
 import {tap} from "rxjs/operators";
 import {Observable} from "rxjs";
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-details',
@@ -37,14 +38,15 @@ export class DetailsComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       
       if (result) {
-        result.name.length === ""?"result.name":'Travel';
-        result.description.length === ""?result.description:'Empty Line';
-        result.departure.length === ""?result.departure:new Date();
-        result.return.length === ""?result.return:new Date();
-        result.like.length === ""?result.like:false;
+        result.name = result.name.length != 0?result.name:'Travel';
+        result.description = result.description.length != 0?result.description:'Empty Line';
+        result.departure = result.departure.length != 0?new Date(result.departure):new Date();
+        result.return = result.return.length != 0?new Date(result.return):new Date();
+        result.like = result.like.length != 0?result.like:false;
         this.travelService.insertTravel(result);
       }
     });
+
       this.table.renderRows();
   }
 
@@ -54,15 +56,15 @@ export class DetailsComponent implements OnInit {
         id: id,
         name: this.dataSource.data[id].name,
         description: this.dataSource.data[id].description,
-        departure: this.dataSource.data[id].departure,
-        return: this.dataSource.data[id].return,
+        departure: formatDate(this.dataSource.data[id].departure, 'yyyy-MM-dd', 'en'),
+        return: formatDate(this.dataSource.data[id].return, 'yyyy-MM-dd', 'en'),
         like: this.dataSource.data[id].like
       },
     }).afterClosed().pipe(tap(travel => {
       this.travelService.setTravel(travel);
     })).subscribe();
+    this.table.renderRows()
   }
-
   
   deleteTravel(id: number): void {
     this.travelService.deleteTravel(id);
