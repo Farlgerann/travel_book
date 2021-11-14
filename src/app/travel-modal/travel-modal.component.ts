@@ -30,28 +30,40 @@ export class TravelModalComponent implements OnInit {
     });
 
     this.travelForm.get("name").valueChanges.subscribe(x => {
-      this.updateProgressBar(1);
+      if (this.travelForm.get("name").value.length > 0)
+        this.updateProgressBar(1, true);
+      else
+        this.updateProgressBar(1, false);
     });
     this.travelForm.get("description").valueChanges.subscribe(x => {
-      this.updateProgressBar(2);
+      if (this.travelForm.get("description").value.length > 0)
+        this.updateProgressBar(2, true);
+      else
+        this.updateProgressBar(2, false);
     });
     this.travelForm.get("departure").valueChanges.subscribe(x => {
-      this.updateProgressBar(3);
+      if (this.travelForm.get("departure").value.length > 0)
+        this.updateProgressBar(3, true);
+      else
+        this.updateProgressBar(3, false);
     });
     this.travelForm.get("return").valueChanges.subscribe(x => {
-      this.updateProgressBar(4);
+      if (this.travelForm.get("return").value.length > 0)
+        this.updateProgressBar(4, true);
+      else
+        this.updateProgressBar(4, false);
     });
   }
 
-  updateProgressBar( value: number) {
-    if (value == 1)
-      this.namefilled = !this.namefilled;
-    if (value == 2)
-      this.descriptionfilled = !this.descriptionfilled;
-    if (value == 3)
-      this.departurefilled = !this.departurefilled;
-    if (value == 4)
-      this.returnfilled = !this.returnfilled;
+  updateProgressBar( control: number, filled: boolean) {
+    if (control == 1)
+      this.namefilled = filled? true : false;
+    else if (control == 2)
+      this.descriptionfilled = filled? true : false;
+    else if (control == 3)
+      this.departurefilled = filled? true : false;
+    else if (control == 4)
+      this.returnfilled = filled? true : false;
     this.progressBarValue = ((this.namefilled?25:0) + (this.descriptionfilled?25:0) + (this.departurefilled?25:0) + (this.returnfilled?25:0));
   }
 
