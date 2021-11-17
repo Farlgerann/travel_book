@@ -21,12 +21,12 @@ export class TravelModalComponent implements OnInit {
   }
   public ngOnInit(): void {
     this.travelForm = new FormGroup({
-      id: new FormControl(this.data.id),
-      name: new FormControl(this.data.name),
-      description: new FormControl(this.data.description),
-      departure: new FormControl(this.data.departure),
-      return: new FormControl(this.data.return),
-      like: new FormControl(this.data.like)
+      id: new FormControl(this.data?.id),
+      name: new FormControl(this.data?.name),
+      description: new FormControl(this.data?.description),
+      departure: new FormControl(this.data?.departure),
+      return: new FormControl(this.data?.return),
+      like: new FormControl(this.data?.like)
     });
     this.travelForm.valueChanges.subscribe(() => {
       this.updateProgressBar();

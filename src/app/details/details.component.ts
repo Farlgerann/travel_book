@@ -38,11 +38,11 @@ export class DetailsComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       
       if (result) {
-        result.name = result.name.length != 0?result.name:'Travel';
-        result.description = result.description.length != 0?result.description:'Empty Line';
-        result.departure = result.departure.length != 0?new Date(result.departure):new Date();
-        result.return = result.return.length != 0?new Date(result.return):new Date();
-        result.like = result.like.length != 0?result.like:false;
+        result.name = result.name || 'Travel';
+        result.description = result.description || 'Description';
+        result.departure = result.departure || new Date();
+        result.return = result.return || new Date();
+        result.like = result.like || false;
         this.travelService.insertTravel(result);
       }
     });
@@ -69,6 +69,11 @@ export class DetailsComponent implements OnInit {
   deleteTravel(id: number): void {
     this.travelService.deleteTravel(id);
     this.table.renderRows();
+  }
+  
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   
   toggleLike(id: number): void {
